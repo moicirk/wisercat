@@ -1,0 +1,33 @@
+<h2>My filters</h2>
+<ul class="heroes">
+  <li *ngFor="let filter of filters">
+    <div class="">
+      <div>
+        ID: {{filter.id}}
+      </div>
+      <div>
+        Name: {{filter.name}}
+      </div>
+      <div>
+        Filters: {{filter.criteria.length}}
+      </div>
+      <div>
+        <button type="button" class="btn btn-success me-1" (click)="selectFilter(filter)">
+          Edit
+        </button>
+        <button type="button" class="btn btn-danger" [disabled]="filters.length < 2">
+          Delete
+        </button>
+      </div>
+    </div>
+  </li>
+</ul>
+
+<div>
+  <button type="button" class="btn btn-secondary" (click)="createFilter()">
+    Add filter
+  </button>
+</div>
+
+
+<app-filter-form [filter]="selectedFilter"></app-filter-form>

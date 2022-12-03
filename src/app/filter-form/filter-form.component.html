@@ -1,0 +1,46 @@
+<div *ngIf="filter">
+
+  <form (ngSubmit)="onSubmit()" #filterForm="ngForm">
+
+    {{filter | json}}
+
+    <div class="mb-3 row">
+      <label for="filterName" class="col-3 form-label">Filter name</label>
+      <div class="col-9">
+        <input type="text" id="filterName" name="name" [(ngModel)]="filter.name" #name="ngModel" required>
+        <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+          Name is required
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <label for="filterCriteria" class="col-3 form-label">Criteria</label>
+      <div class="col-9">
+        Criteria
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <label for="filterSelection" class="col-3 form-label">Selection</label>
+      <div class="col-9">
+        <input type="text" id="filterSelection" name="selection" [(ngModel)]="filter.selection" #selection="ngModel" required>
+        <div [hidden]="selection.valid || selection.pristine" class="alert alert-danger">
+          Selection is required
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <button type="button" class="btn btn-secondary me-1" (click)="resetFilter()">
+        Cancel
+      </button>
+
+      <button type="submit" class="btn btn-success" (click)="saveFilter()" [disabled]="!filterForm.form.valid">
+        Save
+      </button>
+    </div>
+
+  </form>
+</div>
+
