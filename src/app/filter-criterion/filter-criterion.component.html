@@ -1,0 +1,41 @@
+<div class="row align-items-center">
+  <div class="col-4">
+    <select class="form-control" [ngModel]="criterion.type" (ngModelChange)="onSelectType($event)">
+      <option *ngFor="let type of types" [value]="type.id">{{type.name}}</option>
+    </select>
+  </div>
+
+  <div class="col-4">
+    <select class="form-control" [(ngModel)]="criterion.operator">
+      <option *ngFor="let operator of operators" [value]="operator.id">{{operator.name}}</option>
+    </select>
+  </div>
+
+  <div class="col-3">
+    <input class="form-control" type="number" *ngIf="sign === 'number'" [(ngModel)]="criterion.value">
+    <input class="form-control" type="text" *ngIf="sign === 'string'" [(ngModel)]="criterion.value">
+    <div class="row" *ngIf="sign === 'date'">
+      <div class="col-4">
+        <select class="form-control">
+          <option value="22">22</option>
+        </select>
+      </div>
+
+      <div class="col-4">
+        <select class="form-control">
+          <option value="22">22</option>
+        </select>
+      </div>
+
+      <div class="col-4">
+        <select class="form-control">
+          <option value="22">22</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-1">
+    <i class="bi bi-trash-fill"></i>
+  </div>
+</div>
