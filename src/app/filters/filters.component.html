@@ -12,10 +12,13 @@
         Filters: {{filter.criteria.length}}
       </div>
       <div>
+        Selection: {{filter.selection}}
+      </div>
+      <div>
         <button type="button" class="btn btn-success me-1" (click)="selectFilter(filter)">
           Edit
         </button>
-        <button type="button" class="btn btn-danger" [disabled]="filters.length < 2">
+        <button type="button" class="btn btn-danger" (click)="deleteFilter(filter)" [disabled]="filters.length < 2">
           Delete
         </button>
       </div>

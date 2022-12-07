@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { Criteria } from "../criteria";
 
 @Component({
@@ -6,42 +6,42 @@ import { Criteria } from "../criteria";
   templateUrl: './filter-criterion.component.html',
   styleUrls: ['./filter-criterion.component.scss']
 })
-export class FilterCriterionComponent {
+export class FilterCriterionComponent implements OnInit {
   @Input() criterion!: Criteria;
-  @Output() updateCriterion = new EventEmitter<Criteria>();
+  @Output() removeItem = new EventEmitter();
 
-  sign = 'number';
+  sign: string = 'number';
+
   types = [
     { id: 'amount', name: 'Amount' },
     { id: 'title', name: 'Title' },
     { id: 'date', name: 'Date' },
   ];
-  operators = [
+
+  numberOperators = [
     { id: 'equals', name: 'Equals' },
     { id: 'less', name: 'Less' },
     { id: 'more', name: 'More' },
   ];
 
-  ngOnInit(): void {}
+  stringOperators = [
+    { name: 'Start with', id: 'start' },
+    { name: 'End with', id: 'end' },
+    { name: 'Equals', id: 'equals' },
+  ];
 
-  onSelectType(type: string): void {
-    this.onSelectSign(type);
-    this.onSelectOperators();
+  dateOperators = [
+    { name: 'From', id: 'from' },
+    { name: 'To', id: 'to' },
+  ];
 
-    this.criterion.type = type;
-    this.criterion.operator = this.operators[0].id;
-    this.criterion.value = 'Meow';
-
-    if (this.sign === 'number') {
-      this.criterion.value = '1';
-    }
-
-    if (this.sign === 'date') {
-      this.criterion.value = '2022-10-25';
-    }
+  ngOnInit(): void {
+    this.onSelectSign();
   }
 
-  onSelectSign(type: string) {
+  onSelectSign(): void {
+    const type = this.criterion.type;
+
     if (type === 'date') {
       this.sign = 'date';
     } else if (type === 'title') {
@@ -51,28 +51,23 @@ export class FilterCriterionComponent {
     }
   }
 
-  onSelectOperators(): void {
-    if (this.sign === 'number') {
-      this.operators = [
-        { id: 'equals', name: 'Equals' },
-        { id: 'less', name: 'Less' },
-        { id: 'more', name: 'More' },
-      ];
-    }
+  onSelectType(type: string): void {
+    this.criterion.type = type;
+    this.onSelectSign();
+
+    let operators = this.numberOperators;
+    this.criterion.value = '1';
 
     if (this.sign === 'string') {
-      this.operators = [
-        { name: 'Start with', id: 'start' },
-        { name: 'End with', id: 'end' },
-        { name: 'Equals', id: 'equals' },
-      ];
+      operators = this.stringOperators;
+      this.criterion.value = 'Meow';
     }
 
     if (this.sign === 'date') {
-      this.operators = [
-        { name: 'From', id: 'from' },
-        { name: 'To', id: 'to' },
-      ];
+      operators = this.dateOperators;
+      this.criterion.value = '2022-10-25';
     }
+
+    this.criterion.operator = operators[0].id;
   }
 }

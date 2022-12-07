@@ -6,8 +6,16 @@
   </div>
 
   <div class="col-4">
-    <select class="form-control" [(ngModel)]="criterion.operator">
-      <option *ngFor="let operator of operators" [value]="operator.id">{{operator.name}}</option>
+    <select class="form-control" *ngIf="sign === 'number'" [(ngModel)]="criterion.operator">
+      <option *ngFor="let operator of numberOperators" [value]="operator.id">{{operator.name}}</option>
+    </select>
+
+    <select class="form-control" *ngIf="sign === 'string'" [(ngModel)]="criterion.operator">
+      <option *ngFor="let operator of stringOperators" [value]="operator.id">{{operator.name}}</option>
+    </select>
+
+    <select class="form-control" *ngIf="sign === 'date'" [(ngModel)]="criterion.operator">
+      <option *ngFor="let operator of dateOperators" [value]="operator.id">{{operator.name}}</option>
     </select>
   </div>
 
@@ -36,6 +44,6 @@
   </div>
 
   <div class="col-1">
-    <i class="bi bi-trash-fill"></i>
+    <i class="bi bi-trash-fill" (click)="removeItem.emit()"></i>
   </div>
 </div>

@@ -1,8 +1,8 @@
-import {Component, OnInit, TemplateRef} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Filter } from '../filter';
 import { FilterService } from '../filter.service';
 import { FilterFormComponent } from '../filter-form/filter-form.component';
-import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-filters',
@@ -19,31 +19,45 @@ export class FiltersComponent implements OnInit {
 
   ngOnInit() : void{
     this.getFilters();
-
-    ////TODO: delete this!
-    this.createFilter();
-  }
-
-  createFilter(): void {
-    this
-      .openModal()
-      .componentInstance
-      .filter = new Filter(null, 'My filter', 1, []);
-  }
-
-  selectFilter(filter: Filter): void {
-    this
-      .openModal()
-      .componentInstance
-      .filter = filter;
   }
 
   getFilters(): void {
-    this.filterService.getFilters()
-      .subscribe(filters => this.filters = filters);
+    this.filterService.getFilters().subscribe(filters => this.filters = filters);
   }
 
-  private openModal(): NgbModalRef {
-    return this.modalService.open(FilterFormComponent, { size: this.modalSize });
+  createFilter(): void {
+    this.openFormModal();
+  }
+
+  selectFilter(filter: Filter): void {
+    this.openFormModal(filter);
+  }
+
+  deleteFilter(filter: Filter): void {
+    const filterIndex = this.filters.findIndex(f => f.id === filter.id);
+    if (filterIndex > -1) {
+      this.filterService.deleteFilter(filter)
+        .subscribe(() => this.filters.splice(filterIndex, 1));
+    }
+  }
+
+  private openFormModal(originalFilter?: Filter): void {
+    const modalRef = this.modalService.open(FilterFormComponent, {
+      size: this.modalSize,
+      scrollable: true
+    });
+
+    modalRef.componentInstance.filter = originalFilter === undefined
+      ? new Filter(null, 'My filter', 1, [])
+      : Filter.from(originalFilter);
+
+    modalRef.componentInstance.addFilter.subscribe((filter: Filter) => {
+      if (originalFilter === undefined) {
+        this.filters.push(filter);
+      } else {
+        const filterIndex = this.filters.findIndex(f => f.id === filter.id);
+        this.filters[filterIndex] = filter;
+      }
+    });
   }
 }

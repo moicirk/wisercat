@@ -21,11 +21,37 @@ app.get('/api/filter', (req, res) => {
   res.json(filters);
 });
 
-app.put('/api/filter', (req, res) => {
-  res.json([]);
+app.post('/api/filter', (req, res) => {
+  const id = filters[filters.length - 1].id + 1;
+
+  const filter = req.body;
+  filter.id = id;
+  filters.push(filter);
+
+  res.json(filters[filters.length - 1]);
 });
 
-app.post('/api/filter', (req, res) => {
+app.put('/api/filter/:id', (req, res) => {
+  const id = req.param.id;
+  const filterIndex = filters.findIndex(filter => filter.id === id);
+  if (filterIndex === undefined) {
+    throw new Error('Filter not found');
+  }
+
+  filters[filterIndex] = req.body;
+
+  res.json(filters[filterIndex]);
+});
+
+app.delete('/api/filter/:id', (req, res) => {
+  const id = req.param.id;
+  const filterIndex = filters.findIndex(filter => filter.id === id);
+  if (filterIndex === undefined) {
+    throw new Error('Filter not found');
+  }
+
+  filters.splice(filterIndex, 1);
+
   res.json([]);
 });
 
