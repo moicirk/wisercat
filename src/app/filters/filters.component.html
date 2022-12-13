@@ -1,34 +1,53 @@
 <h2>My filters</h2>
-<ul class="heroes">
-  <li *ngFor="let filter of filters">
-    <div class="">
-      <div>
-        ID: {{filter.id}}
+<hr>
+
+<div class="card mb-2" *ngFor="let filter of filters">
+  <div class="card-body">
+
+    <div class="row">
+      <div class="col-4">
+        <span class="fw-bolder">{{filter.name}}</span>
       </div>
-      <div>
-        Name: {{filter.name}}
+      <div class="col-6">
+
+        <ul class="list-unstyled mb-0">
+          <li>
+            Selection:
+            <span class="badge text-bg-primary">
+              Select {{filter.selection}}
+            </span>
+          </li>
+          <li>
+            Criteria:
+            <span class="badge text-bg-primary">
+              {{filter.criteria.length}}
+            </span>
+          </li>
+        </ul>
+
       </div>
-      <div>
-        Filters: {{filter.criteria.length}}
-      </div>
-      <div>
-        Selection: {{filter.selection}}
-      </div>
-      <div>
-        <button type="button" class="btn btn-success me-1" (click)="selectFilter(filter)">
-          Edit
+      <div class="col-2 text-end">
+        <button class="btn btn-success me-1" (click)="selectFilter(filter)">
+          <i class="bi bi-pencil"></i>
         </button>
-        <button type="button" class="btn btn-danger" (click)="deleteFilter(filter)" [disabled]="filters.length < 2">
-          Delete
+
+        <button class="btn btn-danger"
+                (click)="deleteFilter(filter)"
+                [disabled]="filters.length < 2"
+        >
+          <i class="bi bi-trash3"></i>
         </button>
       </div>
     </div>
-  </li>
-</ul>
 
-<div>
-  <button type="button" class="btn btn-secondary" (click)="createFilter()">
-    Add filter
-  </button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col text-center">
+    <button type="button" class="btn btn-secondary" (click)="createFilter()">
+      Add filter
+    </button>
+  </div>
 </div>
 

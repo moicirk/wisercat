@@ -70,4 +70,8 @@ export class FilterCriterionComponent implements OnInit {
 
     this.criterion.operator = operators[0].id;
   }
+
+  setValue(value: string): void {
+    this.criterion.value = value;
+  }
 }

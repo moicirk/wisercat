@@ -1,0 +1,17 @@
+<div class="row g-1">
+  <div class="col-3">
+    <select class="form-control" [ngModel]="date" (ngModelChange)="setDate($event)">
+      <option *ngFor="let date of dates" [value]="date">{{date}}</option>
+    </select>
+  </div>
+  <div class="col-3">
+    <select class="form-control" [ngModel]="month" (ngModelChange)="setMonth($event)">
+      <option *ngFor="let month of months" [value]="month">{{month}}</option>
+    </select>
+  </div>
+  <div class="col-6">
+    <select class="form-control" [ngModel]="year" (ngModelChange)="setYear($event)">
+      <option *ngFor="let year of years" [value]="year">{{year}}</option>
+    </select>
+  </div>
+</div>

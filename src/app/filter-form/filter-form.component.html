@@ -1,14 +1,11 @@
 <form (ngSubmit)="onSubmit()" #filterForm="ngForm">
-<div class="modal-header">
-  <h4 class="modal-title" id="modal-basic-title">Filter</h4>
-  <button type="button" class="btn-close" aria-label="Close" (click)="modalDismiss()"></button>
-</div>
-<div class="modal-body">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Filter</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modalDismiss()"></button>
+  </div>
+  <div class="modal-body">
 
-  <div *ngIf="filter">
-
-    {{filter | json}}
-
+    <div>
       <div class="mb-3 row">
         <label for="filterName" class="col-2 form-label fw-bold">Filter name</label>
         <div class="col-10">
@@ -16,7 +13,7 @@
           <div class="row">
             <div class="col-4">
               <input type="text" id="filterName" class="form-control" name="name" placeholder="Filter name" [(ngModel)]="filter.name" #name="ngModel" required>
-              <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+              <div [hidden]="name.valid || name.pristine" class="text-danger">
                 Name is required
               </div>
             </div>
@@ -35,8 +32,14 @@
             (removeItem)="removeCriterionItem(i)"
           ></app-filter-criterion>
 
+          <div class="row mb-1" *ngIf="filter.criteria.length === 0">
+            <div class="col text-center">
+              No criteria selected
+            </div>
+          </div>
+
           <div class="row">
-            <div class="col">
+            <div class="col text-center">
               <button type="button" class="btn btn-secondary" (click)="addCriterionRow()">
                 Add row
               </button>
@@ -65,16 +68,16 @@
 
         </div>
       </div>
+    </div>
+
   </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modalDismiss()">
+      Close
+    </button>
 
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-secondary" (click)="modalDismiss()">
-    Close
-  </button>
-
-  <button class="btn btn-primary">
-    Save
-  </button>
-</div>
+    <button type="submit" class="btn btn-primary" [disabled]="!filterForm.valid">
+      Save
+    </button>
+  </div>
 </form>

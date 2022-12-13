@@ -34,6 +34,10 @@ export class FiltersComponent implements OnInit {
   }
 
   deleteFilter(filter: Filter): void {
+    if (!confirm('Are you sure?')) {
+      return;
+    }
+
     const filterIndex = this.filters.findIndex(f => f.id === filter.id);
     if (filterIndex > -1) {
       this.filterService.deleteFilter(filter)
@@ -48,10 +52,10 @@ export class FiltersComponent implements OnInit {
     });
 
     modalRef.componentInstance.filter = originalFilter === undefined
-      ? new Filter(null, 'My filter', 1, [])
+      ? new Filter(null, 'My filter', 1, [{ type: 'amount', operator: 'equals', value: '4' }])
       : Filter.from(originalFilter);
 
-    modalRef.componentInstance.addFilter.subscribe((filter: Filter) => {
+    modalRef.componentInstance.updateFilter.subscribe((filter: Filter) => {
       if (originalFilter === undefined) {
         this.filters.push(filter);
       } else {

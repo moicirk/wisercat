@@ -10,7 +10,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class FilterFormComponent {
   @Input() filter!: Filter;
-  @Output() addFilter = new EventEmitter<Filter>();
+  @Output() updateFilter = new EventEmitter<Filter>();
 
   selections = [
     { id: 1, name: 'Select 1' },
@@ -47,7 +47,7 @@ export class FilterFormComponent {
       : this.filterService.updateFilter(this.filter);
 
     serviceMethod.subscribe((filter: Filter) => {
-      this.addFilter.emit(filter);
+      this.updateFilter.emit(filter);
       this.modalDismiss();
     });
   }

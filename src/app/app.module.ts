@@ -8,6 +8,7 @@ import { FiltersComponent } from './filters/filters.component';
 import { FilterFormComponent } from './filter-form/filter-form.component';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { FilterCriterionComponent } from './filter-criterion/filter-criterion.component';
+import { DateComponent } from './filter-criterion/date/date.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { FilterCriterionComponent } from './filter-criterion/filter-criterion.co
     FiltersComponent,
     FilterFormComponent,
     FilterCriterionComponent,
+    DateComponent,
   ],
   imports: [
     BrowserModule,
