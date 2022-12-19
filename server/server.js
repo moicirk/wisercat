@@ -3,12 +3,16 @@ const app = express();
 const bodyParser = require('body-parser');
 port = 4000;
 
-app.set('views', './../src');
+app.set('views', './../dist/wisercat');
 app.set('view engine', 'html');
 
-app.use(express.static('./../src'));
+app.use(express.static('./../dist/wisercat'));
 app.use(bodyParser.json());
 
+/**
+ * Instaed of database
+ * @type array
+ */
 const filters = [
   { id: 1, name: 'My first filter', selection: 1, criteria: [
       { type: 'amount', operator: 'equals', value: 4 },
